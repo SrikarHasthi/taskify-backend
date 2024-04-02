@@ -1,6 +1,8 @@
 package com.example.taskifybackend.todo;
 
 
+import com.example.taskifybackend.todohistory.TodoHistory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -55,9 +57,9 @@ public class Todo {
     private String dateCreated;
 
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    private TodoHistory todoHistoryy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private TodoHistory todoHistoryy;
 
     public Integer getId() {
         return id;
@@ -110,7 +112,15 @@ public class Todo {
 
     public void setDateCreated(String dateCreated) { this.dateCreated = dateCreated; }
 
-//	public User getUser() {
+    public TodoHistory getTodoHistoryy() {
+        return todoHistoryy;
+    }
+
+    public void setTodoHistoryy(TodoHistory todoHistoryy) {
+        this.todoHistoryy = todoHistoryy;
+    }
+
+    //	public User getUser() {
 //		return user;
 //	}
 //
@@ -127,9 +137,8 @@ public class Todo {
                 ", priority='" + priority + '\'' +
                 ", time=" + time +
                 ", status='" + status + '\'' +
-                ", dateCreated='" + dateCreated + '\'' ;
-//				", user=" + user +
-//				'}';
+                ", dateCreated='" + dateCreated + '\'' +
+                '}';
     }
 
 }

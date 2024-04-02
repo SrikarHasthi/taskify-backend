@@ -1,29 +1,32 @@
 package com.example.taskifybackend.todo;
 
 
+import com.example.taskifybackend.todohistory.TodoHistory;
+import com.example.taskifybackend.todohistory.TodoHistoryJpaResource;
+import com.example.taskifybackend.todohistory.TodoHistoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class TodoJpaResource {
 
-//    private  TodoService todoService;
     private  TodoRepository todoRepository;
 
-//    private TodoHistoryRepository todoHistoryRepository;
+    private TodoHistoryJpaResource todoHistoryJpaResource;;
 
-//    public TodoJpaResource(TodoRepository todoRepository, TodoHistoryRepository todoHistoryRepository){
-//      this.todoRepository = todoRepository;
-//      this.todoHistoryRepository = todoHistoryRepository;
-//    };
-
-    public TodoJpaResource(TodoRepository todoRepository){
-        this.todoRepository = todoRepository;
+    public TodoJpaResource(TodoRepository todoRepository, TodoHistoryJpaResource todoHistoryJpaResource){
+      this.todoRepository = todoRepository;
+      this.todoHistoryJpaResource = todoHistoryJpaResource;
     };
 
-    @CrossOrigin(origins = "http://localhost:3000")
+//    public TodoJpaResource(TodoRepository todoRepository){
+//        this.todoRepository = todoRepository;
+//    };
+
+
     @GetMapping("/todoss")
     public List<Todo> retrieveTodos(){
         return todoRepository.findAll();
@@ -35,8 +38,11 @@ public class TodoJpaResource {
         return  ResponseEntity.noContent().build();
     };
 
+
     @PutMapping("/todos/{id}")
     public Todo updateTodo(@PathVariable int id, @RequestBody Todo todo){
+        TodoHistory todayTodoHistory = todoHistoryJpaResource.retrieveTodayTodoHistory();
+        todo.setTodoHistoryy(todayTodoHistory);
         todoRepository.save(todo);
         return todo;
     };
@@ -44,7 +50,10 @@ public class TodoJpaResource {
     @PostMapping("/todoss")
     public Todo createTodo(@RequestBody Todo todo){
         todo.setId(null);
-        return todoRepository.save(todo);
+        TodoHistory todayTodoHistory = todoHistoryJpaResource.retrieveTodayTodoHistory();
+        todo.setTodoHistoryy(todayTodoHistory);
+        todoRepository.save(todo);
+        return todo;
 //        Todo newTodo = todoRepository.save(todo.getSummary(), todo.getDescription(), todo.getPriority(), todo.getTime(), todo.getStatus());
 //        return todo;
 
