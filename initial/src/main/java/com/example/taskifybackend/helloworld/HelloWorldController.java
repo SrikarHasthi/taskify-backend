@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorldController {
 
-//    @GetMapping(path = "/basicauth")
-//    public String basicAuth() {
-//        return "Success";
-//    }
-
+    @GetMapping(path = "/basicauth")
+    public String basicAuth() {
+        return "Success";
+    }
 
     @GetMapping(path = "/hello-world-bean")
     public HelloWorldBean helloWorldBean() {
