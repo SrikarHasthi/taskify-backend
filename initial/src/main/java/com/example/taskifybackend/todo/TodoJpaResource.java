@@ -39,18 +39,18 @@ public class TodoJpaResource {
     };
 
 
-    @PutMapping("/todos/{id}")
-    public Todo updateTodo(@PathVariable int id, @RequestBody Todo todo){
-        TodoHistory todayTodoHistory = todoHistoryJpaResource.retrieveTodayTodoHistory();
+    @PutMapping("/todos/{userId}/{id}")
+    public Todo updateTodo(@PathVariable int userId, @PathVariable int id, @RequestBody Todo todo){
+        TodoHistory todayTodoHistory = todoHistoryJpaResource.retrieveUserTodayTodoHistory(userId);
         todo.setTodoHistoryy(todayTodoHistory);
         todoRepository.save(todo);
         return todo;
     };
 
-    @PostMapping("/todoss")
-    public Todo createTodo(@RequestBody Todo todo){
+    @PostMapping("/todoss/{id}")
+    public Todo createTodo(@RequestBody Todo todo, @PathVariable int id){
         todo.setId(null);
-        TodoHistory todayTodoHistory = todoHistoryJpaResource.retrieveTodayTodoHistory();
+        TodoHistory todayTodoHistory = todoHistoryJpaResource.retrieveUserTodayTodoHistory(id);
         todo.setTodoHistoryy(todayTodoHistory);
         todoRepository.save(todo);
         return todo;
