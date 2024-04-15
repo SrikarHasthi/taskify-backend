@@ -16,17 +16,22 @@
 //public class UserDataService implements UserDetailsService {
 //
 //    @Autowired
-//    private UserRepository userRepo;
+//    private UserRepository userRepository;
 //
 //    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//         UserData userData = userRepo.findByEmail(email);
-//        if(userData ==null){
-//            new UsernameNotFoundException("User not exists by email");
-//        }
-//        Set<GrantedAuthority> authorities = userData.getRoles().stream()
+//    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+//
+//        UserData user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not exists by Username or Email"));
+//
+//        Set<GrantedAuthority> authorities = user.getRoles().stream()
 //                .map((role) -> new SimpleGrantedAuthority(role.getName()))
 //                .collect(Collectors.toSet());
-//        return new org.springframework.security.core.userdetails.User(email, userData.getPassword(),authorities);
+//
+//        return new org.springframework.security.core.userdetails.User(
+//                usernameOrEmail,
+//                user.getPassword(),
+//                authorities
+//        );
 //    }
 //}

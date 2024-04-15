@@ -1,28 +1,30 @@
 package com.example.taskifybackend.user;
 
-
 import com.example.taskifybackend.todohistory.TodoHistory;
 import jakarta.persistence.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import java.util.List;
-import java.util.Set;
 
+
+@Table(name = "users")
 @Entity
 public class UserData {
     public UserData() {
     }
 
-    public UserData(Integer userId, String email, String password) {
+    public UserData(Integer userId, String name, String email, String password) {
         this.userId = userId;
+        this.name = name;
         this.email = email;
         this.password = password;
     }
 
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+
+    @Column(nullable = false, unique = true)
+    private String name;
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
@@ -31,17 +33,6 @@ public class UserData {
     @OneToMany(mappedBy = "userData")
     private List<TodoHistory> todoHistory;
 
-//    @ManyToMany
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    private Set<Role> roles;
-
-//    public Set<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
 
     public List<TodoHistory> getTodoHistory() {
         return todoHistory;
@@ -73,6 +64,14 @@ public class UserData {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

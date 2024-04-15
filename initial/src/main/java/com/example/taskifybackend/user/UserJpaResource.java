@@ -1,6 +1,11 @@
 package com.example.taskifybackend.user;
 
 import com.example.taskifybackend.todohistory.TodoHistory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,6 +14,11 @@ import java.util.Optional;
 @RestController
 public class UserJpaResource {
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
 
     public UserJpaResource(UserRepository userRepository) {
@@ -40,4 +50,22 @@ public class UserJpaResource {
 //        return todo;
 
     };
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody UserData request) {
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+
+        try {
+            jdbcTemplate.update(
+                    "INSERT INTO users (name, email, password, enabled) VALUES (?, ?, ?, ?)",
+                    request.getName(), request.getEmail(), encodedPassword, 1);
+            jdbcTemplate.update(
+                    "INSERT INTO authorities (email, authority) VALUES (?, ?)",
+                    request.getEmail(), "ROLE_USER");
+
+            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error registering user");
+        }
+    }
 }
