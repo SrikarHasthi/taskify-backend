@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +52,13 @@ public class UserJpaResource {
 //        return todo;
 
     };
+
+    @GetMapping("/user-details")
+    public UserData getUserDetails(Authentication authentication) {
+        Optional<UserData> user = userRepository.findByEmail(authentication.getName());
+        Optional<UserData> userOptional = userRepository.findById(user.get().getUserId());
+        return userOptional.orElse(null);
+    }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserData request) {
