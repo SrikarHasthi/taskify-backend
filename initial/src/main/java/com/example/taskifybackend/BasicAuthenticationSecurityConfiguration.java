@@ -42,7 +42,7 @@ public class BasicAuthenticationSecurityConfiguration {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select email,password,enabled "
-                        + "from users "
+                        + "from user_data "
                         + "where email = ?")
                 .authoritiesByUsernameQuery("select email,authority "
                         + "from authorities "

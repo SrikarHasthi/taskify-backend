@@ -57,7 +57,7 @@ public class UserJpaResource {
 
         try {
             jdbcTemplate.update(
-                    "INSERT INTO users (name, email, password, enabled) VALUES (?, ?, ?, ?)",
+                    "INSERT INTO user_data (name, email, password, enabled) VALUES (?, ?, ?, ?)",
                     request.getName(), request.getEmail(), encodedPassword, 1);
             jdbcTemplate.update(
                     "INSERT INTO authorities (email, authority) VALUES (?, ?)",

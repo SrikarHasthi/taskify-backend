@@ -12,7 +12,7 @@ import java.util.Optional;
 public class TodoHistory {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int todoHistoryId;
     private String dateCreated;
 

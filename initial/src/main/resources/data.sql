@@ -1,17 +1,17 @@
--- User user@email.pass/pass
-INSERT INTO users (user_id, name, email, password, enabled)
-  values (1, 'user',
-    'user@email.com',
-    '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a',
-    1);
-
-INSERT INTO authorities (email, authority)
-  values ('user@email.com', 'ROLE_USER');
+---- User user@email.pass/pass
+----INSERT INTO users (user_id, name, email, password, enabled)
+----  values (1, 'user',
+----    'user@email.com',
+----    '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a',
+----    1);
+----
+----INSERT INTO authorities (email, authority)
+----  values ('user@email.com', 'ROLE_USER');
 --
-----insert into user_data (user_id, email, password) values (101, 'abc@gmail.com', 'abc');
-----insert into user_data (user_id, email, password) values (102, 'xyz@gmail.com', 'xyz');
-----insert into user_data (user_id, email, password) values (103, 'pqrs@gmail.com', 'pqrs');
-----insert into user_data (user_id, email, password) values (105, 'pqrs@gmail.com', 'pqrs');
+--insert into user_data (user_id, email, password) values (101, 'abc@gmail.com', 'abc');
+--insert into user_data (user_id, email, password) values (102, 'xyz@gmail.com', 'xyz');
+--insert into user_data (user_id, email, password) values (103, 'pqrs@gmail.com', 'pqrs');
+--insert into user_data (user_id, email, password) values (105, 'pqrs@gmail.com', 'pqrs');
 --
 ----
 ----INSERT INTO user_data_roles (user_data_user_id, roles_id) VALUES (101,1),(102,2);

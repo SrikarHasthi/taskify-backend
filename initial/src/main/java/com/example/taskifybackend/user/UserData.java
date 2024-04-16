@@ -4,8 +4,6 @@ import com.example.taskifybackend.todohistory.TodoHistory;
 import jakarta.persistence.*;
 import java.util.List;
 
-
-@Table(name = "users")
 @Entity
 public class UserData {
     public UserData() {
